@@ -1,0 +1,19 @@
+{
+  "name": "20190827-speech-suite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^6.0.4",
+    "microsoft-cognitiveservices-speech-sdk": "^1.6.0",
+    "uuid": "^3.3.3"
+  }
+}
