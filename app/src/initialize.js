@@ -11,6 +11,7 @@ let sdkStartContinousRecognitionBtn, sdkStopContinousRecognitionBtn;
 let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
+let speechTranslateBtn;
 let audioFile, audioFileValid;
 
 let soundContext = undefined;
@@ -42,16 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
     sdkIntentStartRecognizeOnceAsyncBtn = document.getElementById("speechsdkIntentStartRecognizeOnceAsync");
     sdkIntentStopRecognizeOnceAsyncBtn = document.getElementById("speechsdkIntentStopRecognizeOnceAsync");
     startConversationBtn = document.getElementById("startConversationBtn");
-    stopConversationBtn = document.getElementById("stopConversationBtn")
+    stopConversationBtn = document.getElementById("stopConversationBtn");
+    speechTranslateBtn = document.getElementById("speechTranslateBtn");
     phraseDiv = document.getElementById("phraseDiv");
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
+    phraseDivSource = document.getElementById("phraseDivSource");  // For used in bank translation
+    phraseDivTarget = document.getElementById("phraseDivTarget");  // For used in bank translation
     key = document.getElementById("subscriptionKey");
     appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
     languageTargetOptions = document.getElementById("languageTargetOptions");
+    languageOptionsBank = document.getElementById("languageOptionsBank");
+    languageTargetOptionsBank = document.getElementById("languageTargetOptionsBank");
     // voiceTargetOptions = document.getElementById("voiceTargetOptions");
     voiceOutput = document.getElementById("voiceOutput");
     regionOptions = document.getElementById("regionOptions");
