@@ -12,7 +12,10 @@ let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
 let speechTranslateBtn;
+let bankEnterBtn;
 let audioFile, audioFileValid;
+let bankEnterInput;
+let audio;
 
 let soundContext = undefined;
 try {
@@ -45,13 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
     startConversationBtn = document.getElementById("startConversationBtn");
     stopConversationBtn = document.getElementById("stopConversationBtn");
     speechTranslateBtn = document.getElementById("speechTranslateBtn");
+    bankEnterBtn = document.getElementById("bankEnterBtn");
     phraseDiv = document.getElementById("phraseDiv");
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
     phraseDivSource = document.getElementById("phraseDivSource");  // For used in bank translation
     phraseDivTarget = document.getElementById("phraseDivTarget");  // For used in bank translation
-    key = document.getElementById("subscriptionKey");
+    key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY
     appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
@@ -65,36 +69,13 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
+    bankEnterInput = document.getElementById("bankEnterInput");
 
     // On document load resolve the Speech SDK dependency
     if (SpeechSDK) {
         document.getElementById('content').style.display = 'block';
         document.getElementById('warning').style.display = 'none';
     }
-
-    key.addEventListener("focus", function () {
-        if (key.value === "YOUR_SPEECH_API_KEY") {
-            key.value = "";
-        }
-    });
-
-    key.addEventListener("focusout", function () {
-        if (key.value === "") {
-            key.value = "YOUR_SPEECH_API_KEY";
-        }
-    });
-
-    appId.addEventListener("focus", function () {
-        if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
-            key.value = "";
-        }
-    });
-
-    appId.addEventListener("focusout", function () {
-        if (key.value === "") {
-            key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
-        }
-    });
 
     inputSource.addEventListener("change", function () {
         audioFileValid = inputSource.value === "File";

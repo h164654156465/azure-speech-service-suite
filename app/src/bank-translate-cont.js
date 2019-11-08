@@ -1,7 +1,26 @@
+const dotenv = require('dotenv');
+const request = require('request');
+const uuidv4 = require('uuid/v4');
+const rp = require('request-promise');
+// Requires fs to write synthesized speech to a file
+const fs = require('fs');
+// Requires xmlbuilder to build the SSML body
+const xmlbuilder = require('xmlbuilder');
+
+dotenv.config();
+
 document.addEventListener("DOMContentLoaded", () => {
     let isRecog = false;
     let lastRecognizedSource = "";
     let lastRecognizedTarget = "";
+
+    let languageMapping = {
+        'en-US': { text: 'en', voice: 'Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)' },
+        'ja-JP': { text: 'ja', voice: 'Microsoft Server Speech Text to Speech Voice (ja-JP, Ayumi, Apollo)' },
+        'ko-KR': { text: 'ko', voice: 'Microsoft Server Speech Text to Speech Voice (ko-KR, HeamiRUS)' },
+        'es-ES': { text: 'es', voice: 'Microsoft Server Speech Text to Speech Voice (es-ES, Laura, Apollo)' },
+        'fr-FR': { text: 'fr', voice: 'Microsoft Server Speech Text to Speech Voice (fr-FR, Julie, Apollo)' }
+    }
 
     // Starts continuous speech translation.
     speechTranslateBtn.addEventListener("click", () => {
@@ -31,13 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (authorizationToken) {
                     speechConfig = SpeechSDK.SpeechTranslationConfig.fromAuthorizationToken(authorizationToken, regionOptions.value);
                 } else {
-                    if (key.value === "" || key.value === "YOUR_SPEECH_API_KEY") {
+                    if (key === "" || key === "YOUR_SPEECH_API_KEY") {
                         alert("Please enter your Cognitive Services Speech subscription key!");
                         return;
                     }
-                    speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key.value, regionOptions.value);
+                    speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key, regionOptions.value);
                 }
-                speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key.value, regionOptions.value);
+                speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key, regionOptions.value);
 
                 // Set the source language.
                 speechConfig.speechRecognitionLanguage = languageOptionsBank.value;
@@ -129,6 +148,115 @@ document.addEventListener("DOMContentLoaded", () => {
                     reco = undefined;
                 }
             );
+        }
+    });
+
+    bankEnterBtn.addEventListener("click", () => {
+        let endpoint = process.env.TRANSLATOR_TEXT_ENDPOINT;
+        let subscriptionKey = process.env.TRANSLATOR_TEXT_SUBSCRIPTION_KEY;
+        let filename = uuidv4();
+
+        let targetLang = languageMapping[`${languageOptionsBank.value}`].text;
+        let options = {
+            method: 'POST',
+            baseUrl: endpoint,
+            url: 'translate',
+            qs: {
+                'api-version': '3.0',
+                'to': [`${targetLang}`]
+            },
+            headers: {
+                'Ocp-Apim-Subscription-Key': subscriptionKey,
+                'Content-type': 'application/json',
+                'X-ClientTraceId': uuidv4().toString()
+            },
+            body: [{
+                'text': bankEnterInput.value
+            }],
+            json: true,
+        };
+
+        request(options, async (err, res, body) => {
+            if (err) {
+                throw err;
+            } else {
+                let transText = body[0].translations[0].text
+
+                console.log(transText);
+                const accessToken = await getAccessToken(key);  // Use speech service key instead of text translator one
+                textToSpeech(accessToken, transText);
+            }
+        });
+
+        // Gets an access token.
+        function getAccessToken(subscriptionKey) {
+            let options = {
+                method: 'POST',
+                uri: 'https://eastasia.api.cognitive.microsoft.com/sts/v1.0/issuetoken',
+                headers: {
+                    'Ocp-Apim-Subscription-Key': subscriptionKey
+                }
+            }
+            return rp(options);
+        }
+
+        // Make sure to update User-Agent with the name of your resource.
+        // You can also change the voice and output formats. See:
+        // https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech
+        function textToSpeech(accessToken, text) {
+            let voice = languageMapping[`${languageOptionsBank.value}`].voice;
+            // Create the SSML request.
+            let xml_body = xmlbuilder.create('speak')
+                .att('version', '1.0')
+                .att('xml:lang', languageOptionsBank.value)
+                .ele('voice')
+                .att('xml:lang', languageOptionsBank.value)
+                .att('name', voice)
+                .txt(text)
+                .end();
+            // Convert the XML into a string to send in the TTS request.
+            let body = xml_body.toString();
+
+            let options = {
+                method: 'POST',
+                baseUrl: 'https://eastasia.tts.speech.microsoft.com/',
+                url: 'cognitiveservices/v1',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'cache-control': 'no-cache',
+                    'User-Agent': 'MTCSpeechAPI',
+                    'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
+                    'Content-Type': 'application/ssml+xml'
+                },
+                body: body
+            }
+
+            let request = rp(options)
+                .on('response', (response) => {
+                    let audio;
+                    let stream;
+                    if (response.statusCode === 200) {
+                        // let audioBlob = new Blob([data], { type: "audio/mpeg" });
+                        // let audioURL = URL.createObjectURL(audioBlob);
+                        stream = fs.createWriteStream(`${filename}.mp3`)
+                        request.pipe(stream);
+
+                        stream.on('finish', () => {
+                            console.log('stream end');
+                            if (!audio) {
+                                audio = new Audio(`../${filename}.mp3`);
+                                audio.addEventListener('ended', (event) => {
+                                    console.log(event);
+                                    fs.unlinkSync(`C:\\Users\\h1646\\repos\\ms-projects\\speech-service\\azure-speech-service-suite\\${filename}.mp3`);
+                                });
+                            } else {
+                                audio.setAttribute('src', `C:\\Users\\h1646\\repos\\ms-projects\\speech-service\\azure-speech-service-suite\\${filename}.mp3`);
+                            }
+
+                            audio.play();
+                        });
+                    }
+                });
         }
     });
 });
