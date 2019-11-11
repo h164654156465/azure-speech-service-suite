@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "electron": "^6.0.4",
     "microsoft-cognitiveservices-speech-sdk": "^1.6.0",
     "uuid": "^3.3.3"

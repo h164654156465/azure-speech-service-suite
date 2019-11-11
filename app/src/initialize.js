@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
-    key = document.getElementById("subscriptionKey");
+    key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY
     appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
@@ -65,18 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('content').style.display = 'block';
         document.getElementById('warning').style.display = 'none';
     }
-
-    key.addEventListener("focus", function () {
-        if (key.value === "YOUR_SPEECH_API_KEY") {
-            key.value = "";
-        }
-    });
-
-    key.addEventListener("focusout", function () {
-        if (key.value === "") {
-            key.value = "YOUR_SPEECH_API_KEY";
-        }
-    });
 
     appId.addEventListener("focus", function () {
         if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {

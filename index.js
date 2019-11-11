@@ -1,5 +1,6 @@
 const electron = require("electron");
 const { app, BrowserWindow } = electron;
+require('dotenv').config();
 
 app.on("ready", () => {
     let win = new BrowserWindow({
