@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="src/chat.css">
 
   <title>Speech SDK</title>
 </head>
@@ -24,10 +23,6 @@
     <li class="nav-item">
       <a class="nav-link" id="tran-tab" data-toggle="tab" href="#tran" role="tab" aria-controls="tran"
         aria-selected="false">Speech Translation</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="ct-tab" data-toggle="tab" href="#ct" role="tab" aria-controls="ct"
-        aria-selected="false">Conversation Transcription Demo</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting"
@@ -183,26 +178,6 @@
       </table>
     </div>
 
-    <div class="tab-pane fade" id="ct" role="tabpanel" aria-labelledby="ct-tab">
-      <div class="container bootstrap snippet">
-        <div class="row">
-          <div class="col-md">
-            <div class=" row border-bottom padding-sm" style="height: 40px;">
-              <p><b>Conversation Transcription Demo</b></p>
-            </div>
-            <button id="startConversationBtn">Start Conversation</button>
-            <button id="stopConversationBtn">Stop Conversation</button>
-            <div>
-              <div class="chat-message">
-                <ul id="chat-message-list" class="chat">
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
       <table>
         <tr>
@@ -269,7 +244,6 @@
   <script src="src/speech2text2intent-once.js"></script>
   <script src="src/translate-cont.js"></script>
   <script src="src/translate-once.js"></script>
-  <script src="src/conversation-transcription.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
