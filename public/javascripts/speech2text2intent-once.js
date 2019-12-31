@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (authorizationToken) {
             speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(authorizationToken, regionOptions.value);
         } else {
-            if (key.value === "" || key.value === "YOUR_SPEECH_API_KEY") {
+            if (key === "" || key === "YOUR_SPEECH_API_KEY") {
                 alert("Please enter your Cognitive Services Speech subscription key!");
                 return;
             }
-            speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key.value, regionOptions.value);
+            speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, regionOptions.value);
         }
 
         speechConfig.speechRecognitionLanguage = languageOptions.value;

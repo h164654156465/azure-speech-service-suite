@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Starts continuous speech translation.
-    sdkStartContinousTranslationBtn.addEventListener("click", function () {
+    // Starts speech translation.
+    sdkStartTranslationOnceBtn.addEventListener("click", function () {
         let lastRecognized = "";
         phraseDiv2.innerHTML = "";
         statusDiv2.innerHTML = "";
@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (authorizationToken) {
             speechConfig = SpeechSDK.SpeechTranslationConfig.fromAuthorizationToken(authorizationToken, regionOptions.value);
         } else {
-            if (key.value === "" || key.value === "YOUR_SPEECH_API_KEY") {
+            if (key === "" || key === "YOUR_SPEECH_API_KEY") {
                 alert("Please enter your Cognitive Services Speech subscription key!");
                 return;
             }
-            speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key.value, regionOptions.value);
+            speechConfig = SpeechSDK.SpeechTranslationConfig.fromSubscription(key, regionOptions.value);
         }
 
         // Set the source language.
@@ -30,17 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // If voice output is requested, set the target voice.
         // If multiple text translations were requested, only the first one added will have audio synthesised for it.
         if (voiceOutput.checked) {
-            if (languageTargetOptions.value === "en") {
-                voiceTargetOptions = "en-US-ZiraRUS";
-            } else if (languageTargetOptions.value === "zh-Hant") {
-                voiceTargetOptions = "zh-TW-HanHanRUS";
-            } else if (languageTargetOptions.value === "ja") {
-                voiceTargetOptions = "ja-JP-Ayumi-Apollo";
-            } else if (languageTargetOptions.value = "ko") {
-                voiceTargetOptions = "ko-KR-HeamiRUS";
-            }
-            
-            speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_TranslationVoice, voiceTargetOptions);
+            speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_TranslationVoice, voiceTargetOptions.value);
         }
 
         reco = new SpeechSDK.TranslationRecognizer(speechConfig, audioConfig);
@@ -60,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
         reco.recognizing = function (s, e) {
             statusDiv2.innerHTML += "(recognizing) Reason: " + SpeechSDK.ResultReason[e.result.reason] + " Text: " + e.result.text + " Translations:";
 
-            // let language = languageTargetOptions.value.split("(")[1].substring(0, 2);  This will cause not finding the key problem.
             let language = reco.targetLanguages[0]
 
             statusDiv2.innerHTML += " [" + language + "] " + e.result.translations.get(language);
@@ -76,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         reco.recognized = function (s, e) {
             statusDiv2.innerHTML += "(recognized)  Reason: " + SpeechSDK.ResultReason[e.result.reason] + " Text: " + e.result.text + " Translations:";
 
-            // let language = languageTargetOptions.value.split("(")[1].substring(0, 2);
             let language = reco.targetLanguages[0]
 
             statusDiv2.innerHTML += " [" + language + "] " + e.result.translations.get(language);
@@ -101,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // If the event result contains valid audio, it's reason will be ResultReason.SynthesizingAudio
         // Once a complete phrase has been synthesized, the event will be called with ResultReason.SynthesizingAudioComplete and a 0 byte audio payload.
         reco.synthesizing = function (s, e) {
-            // window.console.log(s.audioConfig.privSource.privStreams);
-            // console.log(e.result.audio)
+            window.console.log(s.audioConfig.privSource.privStreams);
+            console.log(e.result.audio)
 
             let audioSize = e.result.audio === undefined ? 0 : e.result.audio.byteLength;
 
@@ -126,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Signals the end of a session with the speech service.
         reco.sessionStopped = function (s, e) {
             languageTargetOptions.disabled = false;
-            sdkStartContinousTranslationBtn.disabled = false;
-            sdkStopContinousTranslationBtn.disabled = true;
+            sdkStartTranslationOnceBtn.disabled = false;
+            sdkStopTranslationOnceBtn.disabled = true;
 
             statusDiv2.innerHTML += "(sessionStopped) SessionId: " + e.sessionId + "\r\n";
         };
@@ -142,27 +130,48 @@ document.addEventListener("DOMContentLoaded", () => {
             statusDiv2.innerHTML += "(speechEndDetected) SessionId: " + e.sessionId + "\r\n";
         };
 
-        reco.startContinuousRecognitionAsync();
+        reco.recognizeOnceAsync(
+            function (result) {
+                statusDiv2.innerHTML += "(continuation) Reason: " + SpeechSDK.ResultReason[result.reason];
+                switch (result.reason) {
+                    case SpeechSDK.ResultReason.RecognizedSpeech:
+                        statusDiv2.innerHTML += " Text: " + result.text;
+                        break;
+                    case SpeechSDK.ResultReason.NoMatch:
+                        var noMatchDetail = SpeechSDK.NoMatchDetails.fromResult(result);
+                        statusDiv2.innerHTML += " NoMatchReason: " + SpeechSDK.NoMatchReason[noMatchDetail.reason];
+                        break;
+                    case SpeechSDK.ResultReason.Canceled:
+                        var cancelDetails = SpeechSDK.CancellationDetails.fromResult(result);
+                        statusDiv2.innerHTML += " CancellationReason: " + SpeechSDK.CancellationReason[cancelDetails.reason];
 
-        languageTargetOptions.disabled = true;
-        sdkStartContinousTranslationBtn.disabled = true;
-        sdkStopContinousTranslationBtn.disabled = false;
-    });
-
-    sdkStopContinousTranslationBtn.addEventListener("click", function () {
-        languageTargetOptions.disabled = false;
-        sdkStartContinousTranslationBtn.disabled = false;
-        sdkStopContinousTranslationBtn.disabled = true;
-
-        reco.stopContinuousRecognitionAsync(
-            function () {
-                reco.close();
-                reco = undefined;
+                        if (cancelDetails.reason === SpeechSDK.CancellationReason.Error) {
+                            statusDiv2.innerHTML += ": " + cancelDetails.errorDetails;
+                        }
+                        break;
+                }
+                statusDiv2.innerHTML += "\r\n";
+                // phraseDiv2.innerHTML = result.text + "\r\n";
+                sdkStopTranslationOnceBtn.click();
             },
             function (err) {
-                reco.close();
-                reco = undefined;
+                window.console.log(err);
+                phraseDiv2.innerHTML += "ERROR: " + err;
+                sdkStopTranslationOnceBtn.click();
             }
         );
+
+        languageTargetOptions.disabled = true;
+        sdkStartTranslationOnceBtn.disabled = true;
+        sdkStopTranslationOnceBtn.disabled = false;
+    });
+
+    sdkStopTranslationOnceBtn.addEventListener("click", function () {
+        languageTargetOptions.disabled = false;
+        sdkStartTranslationOnceBtn.disabled = false;
+        sdkStopTranslationOnceBtn.disabled = true;
+
+        reco.close();
+        reco = undefined;
     });
 });

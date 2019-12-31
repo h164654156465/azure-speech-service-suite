@@ -32,12 +32,7 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="recog" role="tabpanel" aria-labelledby="recog-tab">
-      <div id="warning">
-        <h1 style="font-weight:500;">Speech Recognition Speech SDK not found
-          (microsoft.cognitiveservices.speech.sdk.bundle.js missing).</h1>
-      </div>
-
-      <div id="content" style="display:none">
+      <div id="content">
         <table>
           <tr>
             <td></td>
@@ -237,7 +232,13 @@
   // RequestAuthorizationToken();
   // }
   // }); -->
+  <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
   <script src="/javascripts/init.js"></script>
+  <script src="/javascripts/speech2text-continue.js"></script>
+  <script src="/javascripts/speech2text-once.js"></script>
+  <script src="/javascripts/speech2text2intent-once.js"></script>
+  <script src="/javascripts/translate-cont.js"></script>
+  <script src="/javascripts/translate-once.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 

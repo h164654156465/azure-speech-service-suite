@@ -1,5 +1,6 @@
 let phraseDiv, statusDiv;
 let phraseDiv2, statusDiv2;
+let SpeechSDK;
 let key, authorizationToken, appId, phrases;
 let regionOptions;
 let languageOptions, inputSource, filePicker;
@@ -22,7 +23,7 @@ try {
         soundContext = new AudioContext();
     } else {
         alert("Audio context not supported");
-    } 
+    }
 }
 catch (e) {
     window.console.log("no sound context found, no audio output. " + e);
@@ -58,23 +59,17 @@ document.addEventListener("DOMContentLoaded", function () {
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
 
-    // // On document load resolve the Speech SDK dependency
-    // if (SpeechSDK) {
-        document.getElementById('content').style.display = 'block';
-        document.getElementById('warning').style.display = 'none';
-    // }
+    // appId.addEventListener("focus", function () {
+    //     if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
+    //         key.value = "";
+    //     }
+    // });
 
-    appId.addEventListener("focus", function () {
-        if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
-            key.value = "";
-        }
-    });
-
-    appId.addEventListener("focusout", function () {
-        if (key.value === "") {
-            key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
-        }
-    });
+    // appId.addEventListener("focusout", function () {
+    //     if (key.value === "") {
+    //         key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
+    //     }
+    // });
 
     inputSource.addEventListener("change", function () {
         audioFileValid = inputSource.value === "File";
@@ -102,3 +97,11 @@ document.addEventListener("DOMContentLoaded", function () {
         audioFile = filePicker2.files[0];
     });
 });
+
+if (!!window.SpeechSDK) {
+    SpeechSDK = window.SpeechSDK;
+
+    fetch('/key')
+        .then((res) => { return res.text(); })
+        .then((subKey) => { key = subKey; })
+}
