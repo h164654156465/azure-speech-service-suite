@@ -22,7 +22,7 @@ try {
         soundContext = new AudioContext();
     } else {
         alert("Audio context not supported");
-    }
+    } 
 }
 catch (e) {
     window.console.log("no sound context found, no audio output. " + e);
@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
-    key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY
     appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
@@ -59,11 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
 
-    // On document load resolve the Speech SDK dependency
-    if (SpeechSDK) {
+    // // On document load resolve the Speech SDK dependency
+    // if (SpeechSDK) {
         document.getElementById('content').style.display = 'block';
         document.getElementById('warning').style.display = 'none';
-    }
+    // }
 
     appId.addEventListener("focus", function () {
         if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
