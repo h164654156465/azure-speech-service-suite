@@ -12,6 +12,7 @@ let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
 let audioFile, audioFileValid;
+let authToken, authSubmitButton;
 
 let soundContext = undefined;
 try {
@@ -58,7 +59,15 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
+    authToken = document.getElementById('authToken');
+    authSubmitButton = document.getElementById('authSubmitButton');
+    //// Authentication
+    // $('#authModal').modal('show');
 
+    // authSubmitButton.addEventListener('click', () => {
+    //     fetch('/auth')
+    //     .then((res)) 
+    // });
     // appId.addEventListener("focus", function () {
     //     if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
     //         key.value = "";

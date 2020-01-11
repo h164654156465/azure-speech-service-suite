@@ -1,4 +1,4 @@
-<!DOCTYPE html>>
+<!DOCTYPE html>
 
 <html>
 
@@ -32,71 +32,65 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="recog" role="tabpanel" aria-labelledby="recog-tab">
-      <div id="content">
-        <table>
-          <tr>
-            <td></td>
-            <td>
-              <h1 style="font-weight:500;">Speech Recognition</h1>
-              <h2 style="font-weight:500;">Microsoft Cognitive Services</h2>
-            </td>
-          </tr>
-          <tr>
-            <td align="right">Input:</td>
-            <td align="left">
-              <select id="inputSource">
-                <option value="Mic" selected="selected">Microphone</option>
-                <option value="File">Audio File</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <input type="file" id="filePicker" accept=".wav" style="display:none" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right"><b>Speech SDK API recognizeOnceAsync:</b></td>
-            <td>
-              <button id="speechsdkStartRecognizeOnceAsync">recognizeOnceAsync()</button>
-              <button id="speechsdkStopRecognizeOnceAsync" disabled="disabled">STOP recognizeOnceAsync()</button>
-            </td>
-          </tr>
-          <tr>
-            <td align="right"><b>Speech SDK API Continuous Speech Recognition:</b></td>
-            <td>
-              <button id="speechsdkStartContinuousRecognition">startContinuousRecognitionAsync()</button>
-              <button id="speechsdkStopContinuousRecognition" disabled="disabled">STOP
-                stopContinuousRecognitionAsync()</button>
-            </td>
-          </tr>
-          <tr>
-            <td align="right"><b>Speech SDK API Intent Recognition:</b></td>
-            <td>
-              <button id="speechsdkIntentStartRecognizeOnceAsync">recognizeOnceAsync()</button>
-              <button id="speechsdkIntentStopRecognizeOnceAsync" disabled="disabled">STOP recognizeOnceAsync()</button>
-            </td>
-          </tr>
-          <tr>
-            <td align="right">Phrase List Values:</td>
-            <td>
-              <input id="phrases" type="text" size="60" value="">(';' separated list)
-            </td>
-          </tr>
-          <tr>
-            <td align="right">Results:</td>
-            <td align="left">
-              <textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea>
-            </td>
-          </tr>
-          <tr>
-            <td align="right">Events:</td>
-            <td align="left"><textarea id="statusDiv"
-                style="display: inline-block;width:500px;height:200px;overflow: scroll;white-space: nowrap;"></textarea>
-            </td>
-          </tr>
-        </table>
+      <div id="content" class="container mt-5">
+        <div class="row">
+          <h1 style="font-weight:500;">Microsoft Cognitive Services: Speech Recognition</h1>
+        </div>
+        <hr>
+        <div class="row mt-4">
+          <div class="col">Input:
+            <select id="inputSource">
+              <option value="Mic" selected="selected">Microphone</option>
+              <option value="File">Audio File</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <input type="file" id="filePicker" accept=".wav" style="display:none" />
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <div class="col-12">
+              <h3>Once Speech Recognition</h3>
+            </div>
+            <div class="col-12">
+              <button id="speechsdkStartRecognizeOnceAsync" type="button" class="btn btn-primary">start</button>
+              <button id="speechsdkStopRecognizeOnceAsync" type="button" class="btn btn-secondary"
+                disabled="disabled">stop</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="col-12">
+              <h3>Continuous Speech Recognition</h3>
+            </div>
+            <div class="col-12">
+              <button id="speechsdkStartContinuousRecognition" type="button" class="btn btn-primary">start</button>
+              <button id="speechsdkStopContinuousRecognition" type="button" class="btn btn-secondary"
+                disabled="disabled">stop</button>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
+            <h3>Intent Recognition:</h3><br>
+            <button id="speechsdkIntentStartRecognizeOnceAsync">recognizeOnceAsync()</button>
+            <button id="speechsdkIntentStopRecognizeOnceAsync" disabled="disabled">STOP recognizeOnceAsync()</button>
+          </div> -->
+        <div class="row mt-4">
+          <div class="col">Phrase List Values:
+            <input id="phrases" type="text" size="30" value="">(';' separated list)
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            Results:
+            <textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea>
+          </div>
+          <div class="col">
+            Events:
+            <textarea id="statusDiv" style="display: inline-block;width:500px;height:200px"></textarea>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -222,16 +216,33 @@
     </div>
   </div>
 
-  <!-- // Initialize(function (speechSdk) {
-  // SpeechSDK = speechSdk;
-  // sdkStartContinousRecognitionBtn.disabled = false;
-  // sdkStartRecognizeOnceAsyncBtn.disabled = false;
+  <!-- For authentication purpose -->
+  <!-- <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="authModalLabel">Access code</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="authToken" class="col-form-label">Please enter your access code</label>
+              <input id="authToken" type="text" class="form-control">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="authSubmitButton" type="button" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
 
-  // // in case we have a function for getting an authorization token, call it.
-  // if (typeof RequestAuthorizationToken === "function") {
-  // RequestAuthorizationToken();
-  // }
-  // }); -->
   <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
   <script src="/javascripts/init.js"></script>
   <script src="/javascripts/speech2text-continue.js"></script>
