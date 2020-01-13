@@ -76,8 +76,17 @@
             <button id="speechsdkIntentStopRecognizeOnceAsync" disabled="disabled">STOP recognizeOnceAsync()</button>
           </div> -->
         <div class="row mt-4">
-          <div class="col">Phrase List Values:
-            <input id="phrases" type="text" size="30" value="">(';' separated list)
+          <div class="col-8">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Phrase List Values</span>
+              </div>
+              <input id="phrases" type="text" class="form-control" size="30" aria-label="Username"
+                aria-describedby="basic-addon1" value="">
+              <div class="input-group-append">
+                <span class="input-group-text">";" separated list</span>
+              </div>
+            </div>
           </div>
         </div>
         <hr>
@@ -165,17 +174,16 @@
       </div>
     </div>
     <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
-      <table>
-        <tr>
-          <td></td>
-          <td>
-            <h1 style="font-weight:500;">Speech Recognition</h1>
-            <h2 style="font-weight:500;">Microsoft Cognitive Services</h2>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Language:</td>
-          <td align="left">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <h1 style="font-weight:500;">Microsoft Cognitive Services: Setting</h1>
+          </div>
+        </div>
+        <hr>
+        <div class="row mt-4">
+          <div class="col-6">
+            <h3>Language:</h3>
             <!-- For the full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/supported-languages -->
             <select id="languageOptions" class="custom-select">
               <option value="en-US" selected="selected">English - US</option>
@@ -185,11 +193,11 @@
               <option value="es-ES">Spanish - SP</option>
               <option value="fr-FR">French - FR</option>
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Region:</td>
-          <td align="left">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <h3>Region:</h3>
             <select id="regionOptions" class="custom-select">
               <option value="eastasia" selected="selected">East Asia</option>
               <option value="southeastasia">South East Asia</option>
@@ -200,20 +208,27 @@
               <option value="northeurope">North Europe</option>
               <option value="westeurope">West Europe</option>
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Application ID:</td>
-          <td>
-            <input id="appId" type="text" size="60" value="YOUR_LANGUAGE_UNDERSTANDING_APP_ID">(only needed for
-            intent
-            recognition)
-          </td>
-        </tr>
-      </table>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-8">
+            <h3>Application ID:</h3>
+            <div class="input-group mb-3">
+              <input id=appId" type="text" class="form-control" placeholder="YOUR_LANGUAGE_UNDERSTANDING_APP_ID"
+                size="60" aria-label="Username" aria-describedby="basic-addon1" value="">
+              <div class="input-group-append">
+                <span class="input-group-text">Needed for
+                  intent
+                  recognition</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- For authentication purpose -->
-    <!-- <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel"
+  </div>
+  <!-- For authentication purpose -->
+  <!-- <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -239,26 +254,26 @@
     </div>
   </div> -->
 
-    <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
-    <script src="/javascripts/init.js"></script>
-    <script src="/javascripts/speech2text-continue.js"></script>
-    <script src="/javascripts/speech2text-once.js"></script>
-    <script src="/javascripts/speech2text2intent-once.js"></script>
-    <script src="/javascripts/translate-cont.js"></script>
-    <script src="/javascripts/translate-once.js"></script>
+  <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <script src="/javascripts/init.js"></script>
+  <script src="/javascripts/speech2text-continue.js"></script>
+  <script src="/javascripts/speech2text-once.js"></script>
+  <script src="/javascripts/speech2text2intent-once.js"></script>
+  <script src="/javascripts/translate-cont.js"></script>
+  <script src="/javascripts/translate-once.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <!-- Bootstrap CDN-->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
+  <!-- Bootstrap CDN-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
