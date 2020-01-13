@@ -93,34 +93,28 @@
         </div>
       </div>
     </div>
-
     <div class="tab-pane fade" id="tran" role="tabpanel" aria-labelledby="tran-tab">
-      <table>
-        <tr>
-          <td></td>
-          <td>
-            <h1 style="font-weight:500;">Speech Translation</h1>
-            <h2 style="font-weight:500;">Microsoft Cognitive Services</h2>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Input:</td>
-          <td align="left">
+      <div class="container mt-5">
+        <div class="row">
+          <div>
+            <h1 style="font-weight:500;">Microsoft Cognitive Services: Speech Translation</h1>
+          </div>
+        </div>
+        <hr>
+        <div class="row mt-4">
+          <div class="col">
+            Input:
             <select id="inputSource2">
               <option value="Mic" selected="selected">Microphone</option>
               <option value="File">Audio File</option>
             </select>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <input type="file" id="filePicker2" accept=".wav" style="display:none" />
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Language output</td>
-          <td>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <input type="file" id="filePicker2" accept=".wav" style="display:none" />
+        </div>
+        <div class="row">
+          <div class="col">Language output
             <!-- For a full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech-->
             <select id="languageTargetOptions">
               <option value="en" selected="selected">
@@ -133,40 +127,43 @@
               <option value="ko">Korean - KR</option>
             </select>
             <input id="voiceOutput" type="checkbox" checked>
-            <label for="voiceOutput">Voice output</label>
-          </td>
-        </tr>
-        <tr>
-          <td algin="right">Speech SDK TranslationOnce</td>
-          <td>
-            <button id="speechsdkStartTranslationOnce">startTranslationOnce()</button>
-            <button id="speechsdkStopTranslationOnce" disabled="disabled">STOP
-              stopTranslationOnce()</button>
-          </td>
-        </tr>
-        <tr>
-          <td algin="right">Speech SDK TranslationContinuous</td>
-          <td>
-            <button id="speechsdkStartContinuousTranslation">startContinuousTranslation()</button>
-            <button id="speechsdkStopContinuousTranslation" disabled="disabled">STOP
-              stopContinuousTranslation()</button>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Results:</td>
-          <td align="left">
+            <label for="voiceOutput">Voice output</label></div>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <div class="col-12">
+              <h3>Once Speech Translation</h3>
+            </div>
+            <div class="col-12">
+              <button id="speechsdkStartTranslationOnce" class="btn btn-primary">start</button>
+              <button id="speechsdkStopTranslationOnce" class="btn btn-secondary" disabled="disabled">stop</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="col-12">
+              <h3>Continuous Speech Translation</h3>
+            </div>
+            <div class="col-12">
+              <button id="speechsdkStartContinuousTranslation" class="btn btn-primary">start</button>
+              <button id="speechsdkStopContinuousTranslation" class="btn btn-secondary"
+                disabled="disabled">stop</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+            Results
             <textarea id="phraseDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td align="right">Events:</td>
-          <td align="left"><textarea id="statusDiv2"
-              style="display: inline-block;width:500px;height:200px;overflow: scroll;white-space: nowrap;"></textarea>
-          </td>
-        </tr>
-      </table>
-    </div>
+          </div>
+          <div class="col">
+            Events:
+            <textarea id="statusDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
+          </div>
+        </div>
 
+      </div>
+    </div>
     <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
       <table>
         <tr>
@@ -208,16 +205,15 @@
         <tr>
           <td align="right">Application ID:</td>
           <td>
-            <input id="appId" type="text" size="60" value="YOUR_LANGUAGE_UNDERSTANDING_APP_ID">(only needed for intent
+            <input id="appId" type="text" size="60" value="YOUR_LANGUAGE_UNDERSTANDING_APP_ID">(only needed for
+            intent
             recognition)
           </td>
         </tr>
       </table>
     </div>
-  </div>
-
-  <!-- For authentication purpose -->
-  <!-- <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel"
+    <!-- For authentication purpose -->
+    <!-- <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -243,26 +239,26 @@
     </div>
   </div> -->
 
-  <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
-  <script src="/javascripts/init.js"></script>
-  <script src="/javascripts/speech2text-continue.js"></script>
-  <script src="/javascripts/speech2text-once.js"></script>
-  <script src="/javascripts/speech2text2intent-once.js"></script>
-  <script src="/javascripts/translate-cont.js"></script>
-  <script src="/javascripts/translate-once.js"></script>
+    <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+    <script src="/javascripts/init.js"></script>
+    <script src="/javascripts/speech2text-continue.js"></script>
+    <script src="/javascripts/speech2text-once.js"></script>
+    <script src="/javascripts/speech2text2intent-once.js"></script>
+    <script src="/javascripts/translate-cont.js"></script>
+    <script src="/javascripts/translate-once.js"></script>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-  <!-- Bootstrap CDN-->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <!-- Bootstrap CDN-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 </body>
 
 </html>
