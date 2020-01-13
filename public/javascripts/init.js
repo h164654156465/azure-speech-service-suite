@@ -1,6 +1,6 @@
-const SpeechSDK = require("microsoft-cognitiveservices-speech-sdk");
 let phraseDiv, statusDiv;
 let phraseDiv2, statusDiv2;
+let SpeechSDK;
 let key, authorizationToken, appId, phrases;
 let regionOptions;
 let languageOptions, inputSource, filePicker;
@@ -12,6 +12,7 @@ let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
 let audioFile, audioFileValid;
+let authToken, authSubmitButton;
 
 let soundContext = undefined;
 try {
@@ -47,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
-    key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY
     appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
@@ -59,24 +59,26 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
+    authToken = document.getElementById('authToken');
+    authSubmitButton = document.getElementById('authSubmitButton');
+    //// Authentication
+    // $('#authModal').modal('show');
 
-    // On document load resolve the Speech SDK dependency
-    if (SpeechSDK) {
-        document.getElementById('content').style.display = 'block';
-        document.getElementById('warning').style.display = 'none';
-    }
+    // authSubmitButton.addEventListener('click', () => {
+    //     fetch('/auth')
+    //     .then((res)) 
+    // });
+    // appId.addEventListener("focus", function () {
+    //     if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
+    //         key.value = "";
+    //     }
+    // });
 
-    appId.addEventListener("focus", function () {
-        if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
-            key.value = "";
-        }
-    });
-
-    appId.addEventListener("focusout", function () {
-        if (key.value === "") {
-            key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
-        }
-    });
+    // appId.addEventListener("focusout", function () {
+    //     if (key.value === "") {
+    //         key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
+    //     }
+    // });
 
     inputSource.addEventListener("change", function () {
         audioFileValid = inputSource.value === "File";
@@ -104,3 +106,11 @@ document.addEventListener("DOMContentLoaded", function () {
         audioFile = filePicker2.files[0];
     });
 });
+
+if (!!window.SpeechSDK) {
+    SpeechSDK = window.SpeechSDK;
+
+    fetch('/key')
+        .then((res) => { return res.text(); })
+        .then((subKey) => { key = subKey; })
+}
