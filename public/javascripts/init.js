@@ -1,7 +1,7 @@
 let phraseDiv, statusDiv;
 let phraseDiv2, statusDiv2;
 let SpeechSDK;
-let key, authorizationToken, appId, phrases;
+let key, token, appId, phrases;
 let regionOptions;
 let languageOptions, inputSource, filePicker;
 let recognizer;
@@ -12,7 +12,6 @@ let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
 let audioFile, audioFileValid;
-let authToken, authSubmitButton;
 
 let soundContext = undefined;
 try {
@@ -59,10 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
-    authToken = document.getElementById('authToken');
     authSubmitButton = document.getElementById('authSubmitButton');
-    //// Authentication
-    // $('#authModal').modal('show');
 
     // authSubmitButton.addEventListener('click', () => {
     //     fetch('/auth')
@@ -110,7 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
 if (!!window.SpeechSDK) {
     SpeechSDK = window.SpeechSDK;
 
-    fetch('/key')
+    fetch('/token')
         .then((res) => { return res.text(); })
-        .then((subKey) => { key = subKey; })
+        .then((authToken) => {
+            token = authToken; 
+        });
 }

@@ -5,6 +5,6 @@ let index = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', index.get_index);
-router.get('/key', index.get_subKey);
+router.get('/token', index.get_token);
 
 module.exports = router;
