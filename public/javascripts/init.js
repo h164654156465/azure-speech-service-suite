@@ -3,7 +3,7 @@ let phraseDiv2, statusDiv2;
 let SpeechSDK;
 let key, token, appId, phrases;
 let regionOptions;
-let languageOptions, inputSource, filePicker;
+let languageOptions, inputSource, filePicker, synthInput;
 let recognizer;
 
 let reco;
@@ -11,6 +11,7 @@ let sdkStartContinousRecognitionBtn, sdkStopContinousRecognitionBtn;
 let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
+let synthBtn;
 let audioFile, audioFileValid;
 
 let soundContext = undefined;
@@ -58,7 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
-    authSubmitButton = document.getElementById('authSubmitButton');
+    synthInput = document.getElementById('synthInput');
+    synthBtn = document.getElementById('synthBtn');
 
     // authSubmitButton.addEventListener('click', () => {
     //     fetch('/auth')
