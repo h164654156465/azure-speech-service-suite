@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // phrases to be recognized from a single use authorization.
         let audioConfig = audioFileValid ? SpeechSDK.AudioConfig.fromWavFileInput(audioFile) : SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
         let speechConfig;
-        if (authorizationToken) {
-            speechConfig = SpeechSDK.SpeechTranslationConfig.fromAuthorizationToken(authorizationToken, regionOptions.value);
+        if (token) {
+            speechConfig = SpeechSDK.SpeechTranslationConfig.fromAuthorizationToken(token, regionOptions.value);
         } else {
             if (key === "" || key === "YOUR_SPEECH_API_KEY") {
                 alert("Please enter your Cognitive Services Speech subscription key!");

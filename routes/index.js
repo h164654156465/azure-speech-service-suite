@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 let index = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', index.get_index);
-router.get('/key', index.get_subKey);
+
+/* GET Azure Speech Service access token */
+router.get('/token', index.get_token);
 
 module.exports = router;

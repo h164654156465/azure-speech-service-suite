@@ -1,9 +1,9 @@
 let phraseDiv, statusDiv;
 let phraseDiv2, statusDiv2;
 let SpeechSDK;
-let key, authorizationToken, appId, phrases;
+let key, token, appId, phrases;
 let regionOptions;
-let languageOptions, inputSource, filePicker;
+let languageOptions, inputSource, filePicker, synthInput, synthLangOptions;
 let recognizer;
 
 let reco;
@@ -11,8 +11,9 @@ let sdkStartContinousRecognitionBtn, sdkStopContinousRecognitionBtn;
 let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
 let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
+let synthBtn;
 let audioFile, audioFileValid;
-let authToken, authSubmitButton;
+let audioPlayer;
 
 let soundContext = undefined;
 try {
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
     languageTargetOptions = document.getElementById("languageTargetOptions");
+    synthLangOptions = document.getElementById('synthLanguageOptions');
     // voiceTargetOptions = document.getElementById("voiceTargetOptions");
     voiceOutput = document.getElementById("voiceOutput");
     regionOptions = document.getElementById("regionOptions");
@@ -59,10 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
     filePicker = document.getElementById('filePicker');
     inputSource2 = document.getElementById('inputSource2');
     filePicker2 = document.getElementById('filePicker2');
-    authToken = document.getElementById('authToken');
-    authSubmitButton = document.getElementById('authSubmitButton');
-    //// Authentication
-    // $('#authModal').modal('show');
+    synthInput = document.getElementById('synthInput');
+    synthBtn = document.getElementById('synthBtn');
+    audioPlayer = document.getElementById('audioPlayer');
 
     // authSubmitButton.addEventListener('click', () => {
     //     fetch('/auth')
@@ -110,7 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
 if (!!window.SpeechSDK) {
     SpeechSDK = window.SpeechSDK;
 
-    fetch('/key')
+    fetch('/token')
         .then((res) => { return res.text(); })
-        .then((subKey) => { key = subKey; })
+        .then((authToken) => {
+            token = authToken; 
+        });
 }

@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
         var audioConfig = audioFileValid ? SpeechSDK.AudioConfig.fromWavFileInput(audioFile) : SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
 
         var speechConfig;
-        if (authorizationToken) {
-            speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(authorizationToken, regionOptions.value);
+        if (token) {
+            speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(token, regionOptions.value);
         } else {
             if (key === "" || key === "YOUR_SPEECH_API_KEY") {
                 alert("Please enter your Cognitive Services Speech subscription key!");
