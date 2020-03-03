@@ -187,13 +187,13 @@
         <hr>
         <div class="row">
           <div class="col-6">Output language:
-          <select id="languageOptionsBank" class="custom-select">
-            <option value="en-US" selected="selected">English - US</option>
-            <option value="ja-JP">Japanese - JP</option>
-            <option value="ko-KR">Korean - KR</option>
-            <option value="es-ES">Spanish - SP</option>
-            <option value="fr-FR">French - FR</option>
-          </select></div>
+            <select id="synthLanguageOptions" class="custom-select">
+              <option value="en-US" selected="selected">English - US</option>
+              <option value="ja-JP">Japanese - JP</option>
+              <option value="ko-KR">Korean - KR</option>
+              <option value="es-ES">Spanish - SP</option>
+              <option value="fr-FR">French - FR</option>
+            </select></div>
         </div>
         <div class="row mt-4">
           <div class="col-6">
@@ -201,11 +201,12 @@
               <input id="synthInput" type="text" class="form-control" placeholder="Something you want to say"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="synthBtn">Enter</button>
+                <button id="synthBtn" class="btn btn-outline-secondary" type="button">Enter</button>
               </div>
             </div>
           </div>
         </div>
+        <audio id="audioPlayer" controls></audio>
       </div>
     </div>
     <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
@@ -273,6 +274,7 @@
   <script src="/javascripts/speech2text2intent-once.js"></script>
   <script src="/javascripts/translate-cont.js"></script>
   <script src="/javascripts/translate-once.js"></script>
+  <script src="/javascripts/text2speech.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
