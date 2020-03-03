@@ -50,17 +50,23 @@ const text_to_speech = (req, res, next) => {
 const delete_file = (req, res, next) => {
     let path = req.query.path;
 
-    fs.unlink(`public/${path}`, (err) => {
-        if (err) {
-            console.log(err);
-            res.json({
-                msg: 'Failed to delete the file',
-                path: path
-            });
-        } else {
-            res.json({
-                msg: 'File deleted',
-                path: path
+    // Check if the file exists in the current directory.
+    fs.access(`public/${path}`, fs.constants.F_OK, (err) => {
+        if (err) console.log(err)
+        else {
+            fs.unlink(`public/${path}`, (err) => {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        msg: 'Failed to delete the file',
+                        path: path
+                    });
+                } else {
+                    res.json({
+                        msg: 'File deleted',
+                        path: path
+                    });
+                }
             });
         }
     });
