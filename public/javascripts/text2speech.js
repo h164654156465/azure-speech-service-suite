@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     audioPlayer.setAttribute('src', res.path);
                     audioPlayer.addEventListener('ended', (event) => {
                         console.log(event);
-                        // deleteFile(`/file?${res.path}`).then((res) => {
-                        //     console.log(res);
-                        // });
+                        deleteFile(`/file?${res.path}`).then((res) => {
+                            console.log(res);
+                        });
                     });
                 } else {
                     console.log('response err');
