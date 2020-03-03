@@ -25,9 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (res.status == 'success') {
                     audioPlayer.setAttribute('src', res.path);
                     audioPlayer.addEventListener('ended', (event) => {
-                        console.log(event);
-                        deleteFile(`/file?${res.path}`).then((res) => {
+                        deleteFile(`/text-to-speech/file?path=${res.path}`).then((res) => {
                             console.log(res);
+
+                            audioPlayer.setAttribute('src', '');
                         });
                     });
                 } else {

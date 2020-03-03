@@ -47,4 +47,23 @@ const text_to_speech = (req, res, next) => {
     request(options).pipe(stream);
 }
 
-module.exports = { text_to_speech }
+const delete_file = (req, res, next) => {
+    let path = req.query.path;
+
+    fs.unlink(`public/${path}`, (err) => {
+        if (err) {
+            console.log(err);
+            res.json({
+                msg: 'Failed to delete the file',
+                path: path
+            });
+        } else {
+            res.json({
+                msg: 'File deleted',
+                path: path
+            });
+        }
+    });
+}
+
+module.exports = { text_to_speech, delete_file }
