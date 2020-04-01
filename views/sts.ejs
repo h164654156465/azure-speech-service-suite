@@ -1,0 +1,74 @@
+<%- include('header') -%>
+<div class="tab-pane" id="tran">
+    <div class="container mt-5">
+        <div class="row">
+            <div>
+                <h1 style="font-weight:500;">Microsoft Cognitive Services: Speech Translation</h1>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-4">
+            <div class="col">
+                Input:
+                <select id="inputSource2">
+                    <option value="Mic" selected="selected">Microphone</option>
+                    <option value="File">Audio File</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <input type="file" id="filePicker2" accept=".wav" style="display:none" />
+        </div>
+        <div class="row">
+            <div class="col">Output language:
+                <!-- For a full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech-->
+                <select id="languageTargetOptions">
+                    <option value="en" selected="selected">
+                        English
+                        - US</option>
+                    <option value="zh-Hant">Chinese - TW
+                    </option>
+                    <option value="ja">Japanese - JP
+                    </option>
+                    <option value="ko">Korean - KR</option>
+                </select>
+                <input id="voiceOutput" type="checkbox" checked>
+                <label for="voiceOutput">Voice output</label></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="col-12">
+                    <h3>Once Speech Translation</h3>
+                </div>
+                <div class="col-12">
+                    <button id="speechsdkStartTranslationOnce" class="btn btn-primary">start</button>
+                    <button id="speechsdkStopTranslationOnce" class="btn btn-secondary"
+                        disabled="disabled">stop</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col-12">
+                    <h3>Continuous Speech Translation</h3>
+                </div>
+                <div class="col-12">
+                    <button id="speechsdkStartContinuousTranslation" class="btn btn-primary">start</button>
+                    <button id="speechsdkStopContinuousTranslation" class="btn btn-secondary"
+                        disabled="disabled">stop</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                Results
+                <textarea id="phraseDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
+            </div>
+            <div class="col">
+                Events:
+                <textarea id="statusDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+<%- include('footer') -%>

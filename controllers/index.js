@@ -1,9 +1,5 @@
 const rp = require('request-promise');
 
-const get_index = (req, res, next) => {
-    res.render('index');
-}
-
 const get_token = (req, res, next) => {
     key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY;
     let options = {
@@ -21,4 +17,4 @@ const get_token = (req, res, next) => {
         });
 }
 
-module.exports = { get_index, get_token }
+module.exports = { get_token }

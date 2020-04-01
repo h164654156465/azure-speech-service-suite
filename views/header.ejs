@@ -15,3 +15,25 @@
 </head>
 
 <body>
+  <%console.log(locals)%>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(sttTab)!=="undefined") { %> <%=sttTab%> <% } %>" id="recog-tab"
+        href="/speech-to-text">Speech
+        Recognition</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(stsTab)!=="undefined") { %> <%=stsTab%> <% } %>" id="tran-tab"
+        href="/speech-translation">Speech
+        Translation</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(ttsTab)!=="undefined") { %> <%=ttsTab%> <% } %>" id="synth-tab"
+        href="/text-to-speech">
+        Speech Synthesis</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(settingTab)!=="undefined") { %> <%=settingTab%> <% } %>" id="setting-tab"
+        href="/setting">Setting</a>
+    </li>
+  </ul>
