@@ -21,9 +21,4 @@ router.get('/text-to-speech', (req, res) => {
     res.render('tts', { ttsTab: 'active' });
 });
 
-/* GET setting tab */
-router.get('/setting', (req, res) => {
-    res.render('setting', { settingTab: 'active' });
-});
-
 module.exports = router;

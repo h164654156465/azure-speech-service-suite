@@ -17,4 +17,10 @@ const get_token = (req, res, next) => {
         });
 }
 
-module.exports = { get_token }
+const get_region = (req, res, next) => {
+    let subRegion = process.env.SPEECH_SERVICE_SUBSCRIPTION_REGION;
+
+    res.send(subRegion);
+}
+
+module.exports = { get_token, get_region }

@@ -6,10 +6,22 @@
         </div>
         <hr>
         <div class="row mt-4">
-            <div class="col">Input:
-                <select id="inputSource">
+            <div class="col-3">Input:
+                <select id="inputSource" class="custom-select">
                     <option value="Mic" selected="selected">Microphone</option>
                     <option value="File">Audio File</option>
+                </select>
+            </div>
+            <div class="col-3">
+                Input language:
+                <!-- For the full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/supported-languages -->
+                <select id="languageOptions" class="custom-select">
+                    <option value="en-US" selected="selected">English - US</option>
+                    <option value="zh-TW">Chinese - TW</option>
+                    <option value="ja-JP">Japanese - JP</option>
+                    <option value="ko-KR">Korean - KR</option>
+                    <option value="es-ES">Spanish - SP</option>
+                    <option value="fr-FR">French - FR</option>
                 </select>
             </div>
         </div>
@@ -66,4 +78,5 @@
         </div>
     </div>
 </div>
+<script type="module" src="/javascripts/speech2text.js"></script>
 <%- include('footer') -%>
