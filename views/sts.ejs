@@ -1,0 +1,101 @@
+<%- include('header') -%>
+<div class="tab-pane" id="tran">
+    <div class="container mt-5">
+        <div class="row">
+            <div>
+                <h1 style="font-weight:500;">Microsoft Cognitive Services: Speech Translation</h1>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-4">
+            <div class="col-3">
+                Input:
+                <select id="inputSource2" class="custom-select">
+                    <option value="Mic" selected="selected">Microphone</option>
+                    <option value="File">Audio File</option>
+                </select>
+            </div>
+            <div class="col-3">
+                Input language:
+                <!-- For the full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/supported-languages -->
+                <select id="languageOptions2" class="custom-select">
+                    <option value="en-US" selected="selected">English - US</option>
+                    <option value="zh-TW">Chinese - TW</option>
+                    <option value="ja-JP">Japanese - JP</option>
+                    <option value="ko-KR">Korean - KR</option>
+                    <option value="es-ES">Spanish - SP</option>
+                    <option value="fr-FR">French - FR</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <input type="file" id="filePicker2" accept=".wav" style="display:none" />
+        </div>
+        <div class="row">
+            <div class="col">Output language:
+                <!-- For a full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech-->
+                <select id="languageTargetOptions">
+                    <option value="en" selected="selected">
+                        English
+                        - US</option>
+                    <option value="zh-Hant">Chinese - TW
+                    </option>
+                    <option value="ja">Japanese - JP
+                    </option>
+                    <option value="ko">Korean - KR</option>
+                </select>
+                <input id="voiceOutput" type="checkbox" checked>
+                <label for="voiceOutput">Voice output</label></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="col-12">
+                    <h3>Once Speech Translation</h3>
+                </div>
+                <div class="col-12">
+                    <button id="speechsdkStartTranslationOnce" class="btn btn-primary">start</button>
+                    <button id="speechsdkStopTranslationOnce" class="btn btn-secondary"
+                        disabled="disabled">stop</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col-12">
+                    <h3>Continuous Speech Translation</h3>
+                </div>
+                <div class="col-12">
+                    <button id="speechsdkStartContinuousTranslation" class="btn btn-primary">start</button>
+                    <button id="speechsdkStopContinuousTranslation" class="btn btn-secondary"
+                        disabled="disabled">stop</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-8">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Phrase List Values</span>
+                    </div>
+                    <input id="phrases2" type="text" class="form-control" size="30" aria-label="Username"
+                        aria-describedby="basic-addon1" value="">
+                    <div class="input-group-append">
+                        <span class="input-group-text">";" separated list</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                Results
+                <textarea id="phraseDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
+            </div>
+            <div class="col">
+                Events:
+                <textarea id="statusDiv2" style="display: inline-block;width:500px;height:200px"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="module" src="/javascripts/translate.js"></script>
+<%- include('footer') -%>

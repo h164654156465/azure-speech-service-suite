@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <script src="/javascripts/index.js"></script>
+  <script src="/javascripts/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <title>Speech SDK</title>
+</head>
+
+<body>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(sttTab)!=="undefined") { %> <%=sttTab%> <% } %>" id="recog-tab"
+        href="/speech-to-text">Speech
+        Recognition</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(stsTab)!=="undefined") { %> <%=stsTab%> <% } %>" id="tran-tab"
+        href="/speech-translation">Speech
+        Translation</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <% if (typeof(ttsTab)!=="undefined") { %> <%=ttsTab%> <% } %>" id="synth-tab"
+        href="/text-to-speech">
+        Speech Synthesis</a>
+    </li>
+  </ul>
