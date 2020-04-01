@@ -1,7 +1,7 @@
 let phraseDiv, statusDiv;
 let phraseDiv2, statusDiv2;
 let SpeechSDK;
-let key, token, appId, phrases;
+let key, token, phrases;
 let regionOptions;
 let languageOptions, inputSource, filePicker, synthInput, synthLangOptions;
 let recognizer;
@@ -10,7 +10,6 @@ let reco;
 let sdkStartContinousRecognitionBtn, sdkStopContinousRecognitionBtn;
 let sdkStartContinousTranslationBtn, sdkStopContinousTranslationBtn;
 let sdkStartRecognizeOnceAsyncBtn, sdkStopRecognizeOnceAsyncBtn, languageTargetOptions, voiceOutput;
-let sdkIntentStartRecognizeOnceAsyncBtn, sdkIntentStopRecognizeOnceAsyncBtn;
 let synthBtn;
 let audioFile, audioFileValid;
 let audioPlayer;
@@ -49,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     statusDiv = document.getElementById("statusDiv");
     phraseDiv2 = document.getElementById("phraseDiv2");
     statusDiv2 = document.getElementById("statusDiv2");
-    appId = document.getElementById("appId");
     phrases = document.getElementById("phrases");
     languageOptions = document.getElementById("languageOptions");
     languageTargetOptions = document.getElementById("languageTargetOptions");
@@ -64,22 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
     synthInput = document.getElementById('synthInput');
     synthBtn = document.getElementById('synthBtn');
     audioPlayer = document.getElementById('audioPlayer');
-
-    // authSubmitButton.addEventListener('click', () => {
-    //     fetch('/auth')
-    //     .then((res)) 
-    // });
-    // appId.addEventListener("focus", function () {
-    //     if (key.value === "YOUR_LANGUAGE_UNDERSTANDING_APP_ID") {
-    //         key.value = "";
-    //     }
-    // });
-
-    // appId.addEventListener("focusout", function () {
-    //     if (key.value === "") {
-    //         key.value = "YOUR_LANGUAGE_UNDERSTANDING_APP_ID";
-    //     }
-    // });
 
     inputSource.addEventListener("change", function () {
         audioFileValid = inputSource.value === "File";
