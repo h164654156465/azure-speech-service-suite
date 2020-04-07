@@ -1,7 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const xmlbuilder = require('xmlbuilder');
-const uuidv1 = require('uuid/v1');
+const { v1: uuidv1 } = require('uuid');
 
 const text_to_speech = (req, res, next) => {
     // Declare query parameters.
@@ -16,6 +16,7 @@ const text_to_speech = (req, res, next) => {
     let path = `public/${filename}`;
     let stream = fs.createWriteStream(path);
 
+    console.log(path);
     // Create the SSML request.
     let xml_body = xmlbuilder.create('speak')
         .att('version', '1.0')
@@ -41,7 +42,6 @@ const text_to_speech = (req, res, next) => {
         headers: {
             'Authorization': 'Bearer ' + token,
             'cache-control': 'no-cache',
-            // 'User-Agent': 'MTCSpeechAPI',
             'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
             'Content-Type': 'application/ssml+xml'
         },
@@ -61,7 +61,7 @@ const text_to_speech = (req, res, next) => {
 
 const delete_file = (req, res, next) => {
     let path = req.query.path;
-
+    
     // Check if the file exists in the current directory.
     fs.access(`public/${path}`, fs.constants.F_OK, (err) => {
         if (err) console.log(err);

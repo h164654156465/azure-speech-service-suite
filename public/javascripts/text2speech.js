@@ -16,14 +16,15 @@ synthLangOptions.addEventListener('change', () => {
     speakingStylesOptions.innerHTML = ''; // Clean up select options.
     let lang = synthLangOptions.value;
     let optionsMapping = {
-        'en-US': ['newscast', 'customerservice', 'chat', 'cheerful', 'empathetic'],
-        'zh-CN': ['newscast', 'customerservice', 'assistant', 'lyrical']
+        'en-US': ['neutral', 'newscast', 'customerservice', 'chat', 'cheerful', 'empathetic'],
+        'zh-CN': ['neutral', 'newscast', 'customerservice', 'assistant', 'lyrical']
     };
     if (lang === 'en-US' || lang === 'zh-CN') {
         optionsMapping[lang].map((optionVal) => {
             let option = document.createElement('option');
             option.appendChild(document.createTextNode(optionVal));
-            option.value = optionVal;
+            if (optionVal === 'neutral') option.value = '';
+            else option.value = optionVal;
             speakingStylesOptions.appendChild(option);
         });
     }
@@ -55,19 +56,22 @@ synthBtn.addEventListener('click', async () => {
 
     let res = await fetch(`/text-to-speech/synthesize?${queryString}`);
     res = await res.json();
-    if (res.status === 'success') {
-        audioPlayer.setAttribute('src', res.path);
-        audioPlayer.addEventListener('ended', (event) => {
-            deleteFile(`/text-to-speech/file?path=${res.path}`).then((res) => {
-                console.log(res);
-
-                audioPlayer.setAttribute('src', '');
-            });
-        });
-    } else console.log('response err');
+    if (res.status === 'success') audioPlayer.setAttribute('src', res.path);
+    else console.log('response err');
 });
 
-let deleteFile = async (url) => {
+audioPlayer.addEventListener('ended', (event) => {
+    let url = new URL(audioPlayer.src); // Contruct url to URL object.
+    let path = url.pathname; // Only pathname is needed.
+
+    deleteFile(`/text-to-speech/file?path=${path}`).then((res) => {
+        console.log(res);
+
+        audioPlayer.setAttribute('src', '');
+    });
+});
+
+const deleteFile = async (url) => {
     const res = await fetch(url, {
         method: 'delete'
     });
