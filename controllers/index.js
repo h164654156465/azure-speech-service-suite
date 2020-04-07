@@ -1,20 +1,19 @@
-const rp = require('request-promise');
+const fetch = require('node-fetch');
 
 const get_token = (req, res, next) => {
-    key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY;
+    let key = process.env.SPEECH_SERVICE_SUBSCRIPTION_KEY;
+    let region = process.env.SPEECH_SERVICE_SUBSCRIPTION_REGION;
+    let url = `https://${region}.api.cognitive.microsoft.com/sts/v1.0/issuetoken`;
     let options = {
         method: 'POST',
-        uri: 'https://eastasia.api.cognitive.microsoft.com/sts/v1.0/issuetoken',
         headers: {
             'Ocp-Apim-Subscription-Key': key
         }
     }
-    rp(options)
-        .then(function (token) {
-            res.send(token);
-        }).catch(function (err) {
-            console.log(err)
-        });
+    fetch(url, options)
+        .then(res => res.text())
+        .then(token => res.send(token))
+        .catch(err => console.log(err));
 }
 
 const get_region = (req, res, next) => {
