@@ -1,9 +1,12 @@
+'use strict';
+
 const fs = require('fs');
 const fetch = require('node-fetch');
 const xmlbuilder = require('xmlbuilder');
 const { v1: uuidv1 } = require('uuid');
 
-const text_to_speech = (req, res, next) => {
+// Convert text to speech and pipe it to audio file.
+const text_to_speech = async (req, res, next) => {
     // Declare query parameters.
     let token = req.query.token;
     let lang = req.query.lang;
@@ -16,7 +19,6 @@ const text_to_speech = (req, res, next) => {
     let path = `public/${filename}`;
     let stream = fs.createWriteStream(path);
 
-    console.log(path);
     // Create the SSML request.
     let xml_body = xmlbuilder.create('speak')
         .att('version', '1.0')
@@ -54,14 +56,14 @@ const text_to_speech = (req, res, next) => {
         res.send({ status: 'success', path: filename });
     });
 
-    fetch(url, options)
-        .then(res => res.body.pipe(stream))
-        .catch(err => console.log(err));
+    let speechRes = await fetch(url, options);
+    speechRes.body.pipe(stream).catch(err => console.log(err));
 }
 
+// Delete audio file if it is existed.
 const delete_file = (req, res, next) => {
     let path = req.query.path;
-    
+
     // Check if the file exists in the current directory.
     fs.access(`public/${path}`, fs.constants.F_OK, (err) => {
         if (err) console.log(err);
