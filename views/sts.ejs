@@ -10,7 +10,8 @@
         <div class="row mt-4">
             <div class="col-3">
                 Input:
-                <select id="inputSource2" class="custom-select">
+                <select id="inputSource2" class="custom-select" data-toggle="tooltip" data-placement="top"
+                    title="The default audio file format is WAV (16kHz or 8kHz, 16-bit, and mono PCM)">
                     <option value="Mic" selected="selected">Microphone</option>
                     <option value="File">Audio File</option>
                 </select>
@@ -45,7 +46,8 @@
                     <option value="ko">Korean - KR</option>
                 </select>
                 <input id="voiceOutput" type="checkbox" checked>
-                <label for="voiceOutput">Voice output(only for continuous translation)</label></div>
+                <label for="voiceOutput" data-toggle="tooltip" data-placement="right"
+                    title="Only for continuous translation">Voice output</label></div>
         </div>
         <div class="row mt-4">
             <div class="col">
@@ -66,20 +68,6 @@
                     <button id="speechsdkStartContinuousTranslation" class="btn btn-primary">start</button>
                     <button id="speechsdkStopContinuousTranslation" class="btn btn-secondary"
                         disabled="disabled">stop</button>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-8">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Phrase List Values</span>
-                    </div>
-                    <input id="phrases2" type="text" class="form-control" size="30" aria-label="Username"
-                        aria-describedby="basic-addon1" value="">
-                    <div class="input-group-append">
-                        <span class="input-group-text">";" separated list</span>
-                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
         <hr>
         <div class="row mt-4">
             <div class="col-3">Input:
-                <select id="inputSource" class="custom-select">
+                <select id="inputSource" class="custom-select" data-toggle="tooltip" data-placement="top" title="The default audio file format is WAV (16kHz or 8kHz, 16-bit, and mono PCM)">
                     <option value="Mic" selected="selected">Microphone</option>
                     <option value="File">Audio File</option>
                 </select>
@@ -54,7 +54,7 @@
         <div class="row mt-4">
             <div class="col-8">
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
+                    <div class="input-group-prepend" data-toggle="tooltip" data-placement="bottom" title="Improve the accuracy of speech recognition. Phrase Lists are used to identify known phrases in audio data, like a person's name or a specific location.">
                         <span class="input-group-text" id="basic-addon1">Phrase List Values</span>
                     </div>
                     <input id="phrases" type="text" class="form-control" size="30" aria-label="Username"

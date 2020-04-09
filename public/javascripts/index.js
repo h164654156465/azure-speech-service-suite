@@ -15,3 +15,8 @@ try {
 catch (e) {
     window.console.log("no sound context found, no audio output. " + e);
 }
+
+// Enable tool tip
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
