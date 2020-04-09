@@ -13,6 +13,7 @@ let audioFile, audioFileValid;
 let languageOptions2 = document.getElementById("languageOptions2");
 let languageTargetOptions = document.getElementById("languageTargetOptions");
 let voiceOutput = document.getElementById("voiceOutput");
+let voiceTargetName;
 let sdkStartTranslationOnceBtn = document.getElementById("speechsdkStartTranslationOnce");
 let sdkStopTranslationOnceBtn = document.getElementById("speechsdkStopTranslationOnce");
 let sdkStartContinousTranslationBtn = document.getElementById("speechsdkStartContinuousTranslation");
@@ -21,6 +22,14 @@ let phrases = document.getElementById("phrases2");
 let phraseDiv2 = document.getElementById("phraseDiv2");
 let statusDiv2 = document.getElementById("statusDiv2");
 let reco
+
+// Map from ouput language to ouput voice name
+let voiceMapping = {
+    "en": "en-US-AriaNeural",
+    "zh-Hant": "zh-CN-XiaoxiaoNeural",
+    "ja": "ja-JP-Ayumi-Apollo",
+    "ko": "ko-KR-HeamiRUS"
+}
 
 if (!!window.SpeechSDK) SpeechSDK = window.SpeechSDK;
 
@@ -58,12 +67,6 @@ sdkStartTranslationOnceBtn.addEventListener("click", function () {
     // Defines the language(s) that speech should be translated to.
     // Multiple languages can be specified for text translation and will be returned in a map.
     speechConfig.addTargetLanguage(languageTargetOptions.value);
-
-    // If voice output is requested, set the target voice.
-    // If multiple text translations were requested, only the first one added will have audio synthesised for it.
-    if (voiceOutput.checked) {
-        speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_TranslationVoice, voiceTargetOptions.value);
-    }
 
     reco = new SpeechSDK.TranslationRecognizer(speechConfig, audioConfig);
 
@@ -117,27 +120,6 @@ sdkStartTranslationOnceBtn.addEventListener("click", function () {
         statusDiv2.innerHTML += "(cancel) Reason: " + SpeechSDK.CancellationReason[e.reason] + "\r\n";
     };
 
-    // Signals an audio payload of synthesized speech is ready for playback.
-    // If the event result contains valid audio, it's reason will be ResultReason.SynthesizingAudio
-    // Once a complete phrase has been synthesized, the event will be called with ResultReason.SynthesizingAudioComplete and a 0 byte audio payload.
-    reco.synthesizing = function (s, e) {
-        window.console.log(s.audioConfig.privSource.privStreams);
-        console.log(e.result.audio)
-
-        let audioSize = e.result.audio === undefined ? 0 : e.result.audio.byteLength;
-
-        statusDiv2.innerHTML += "(synthesizing) Reason: " + SpeechSDK.ResultReason[e.result.reason] + " " + audioSize + " bytes\r\n";
-
-        if (e.result.audio && soundContext) {
-            let source = soundContext.createBufferSource();
-            soundContext.decodeAudioData(e.result.audio, function (newBuffer) {
-                source.buffer = newBuffer;
-                source.connect(soundContext.destination);
-                source.start(0);
-            });
-        }
-    };
-
     // Signals that a new session has started with the speech service
     reco.sessionStarted = function (s, e) {
         statusDiv2.innerHTML += "(sessionStarted) SessionId: " + e.sessionId + "\r\n";
@@ -166,7 +148,7 @@ sdkStartTranslationOnceBtn.addEventListener("click", function () {
         function (result) {
             statusDiv2.innerHTML += "(continuation) Reason: " + SpeechSDK.ResultReason[result.reason];
             switch (result.reason) {
-                case SpeechSDK.ResultReason.RecognizedSpeech:
+                case SpeechSDK.ResultReason.TranslatedSpeech:
                     statusDiv2.innerHTML += " Text: " + result.text;
                     break;
                 case SpeechSDK.ResultReason.NoMatch:
@@ -232,17 +214,8 @@ sdkStartContinousTranslationBtn.addEventListener("click", function () {
     // If voice output is requested, set the target voice.
     // If multiple text translations were requested, only the first one added will have audio synthesised for it.
     if (voiceOutput.checked) {
-        if (languageTargetOptions.value === "en") {
-            voiceTargetOptions = "en-US-ZiraRUS";
-        } else if (languageTargetOptions.value === "zh-Hant") {
-            voiceTargetOptions = "zh-TW-HanHanRUS";
-        } else if (languageTargetOptions.value === "ja") {
-            voiceTargetOptions = "ja-JP-Ayumi-Apollo";
-        } else if (languageTargetOptions.value = "ko") {
-            voiceTargetOptions = "ko-KR-HeamiRUS";
-        }
-
-        speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_TranslationVoice, voiceTargetOptions);
+        voiceTargetName = voiceMapping[languageTargetOptions.value];
+        speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_TranslationVoice, voiceTargetName);
     }
 
     reco = new SpeechSDK.TranslationRecognizer(speechConfig, audioConfig);
