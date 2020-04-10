@@ -30,6 +30,17 @@ synthLangOptions.addEventListener('change', () => {
     }
 });
 
+// Execute a function when the user releases a key on the keyboard
+synthInput.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    synthBtn.click();
+  }
+});
+
 // Generate voice output based on custom options when clicking this button.
 synthBtn.addEventListener('click', async () => {
     // For full language and voice support visit: https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support

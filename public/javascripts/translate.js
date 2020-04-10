@@ -18,15 +18,14 @@ let sdkStartTranslationOnceBtn = document.getElementById("speechsdkStartTranslat
 let sdkStopTranslationOnceBtn = document.getElementById("speechsdkStopTranslationOnce");
 let sdkStartContinousTranslationBtn = document.getElementById("speechsdkStartContinuousTranslation");
 let sdkStopContinousTranslationBtn = document.getElementById("speechsdkStopContinuousTranslation");
-let phrases = document.getElementById("phrases2");
 let phraseDiv2 = document.getElementById("phraseDiv2");
 let statusDiv2 = document.getElementById("statusDiv2");
 let reco
 
 // Map from ouput language to ouput voice name
 let voiceMapping = {
-    "en": "en-US-AriaNeural",
-    "zh-Hant": "zh-CN-XiaoxiaoNeural",
+    "en": "en-US-ZiraRUS",
+    "zh-Hant": "zh-TW-Yating-Apollo",
     "ja": "ja-JP-Ayumi-Apollo",
     "ko": "ko-KR-HeamiRUS"
 }
@@ -69,12 +68,6 @@ sdkStartTranslationOnceBtn.addEventListener("click", function () {
     speechConfig.addTargetLanguage(languageTargetOptions.value);
 
     reco = new SpeechSDK.TranslationRecognizer(speechConfig, audioConfig);
-
-    // If Phrases are specified, include them.
-    if (phrases !== "") {
-        let phraseListGrammar = SpeechSDK.PhraseListGrammar.fromRecognizer(reco);
-        phraseListGrammar.addPhrase(phrases.value.split(";"));
-    }
 
     // Before beginning speech recognition, setup the callbacks to be invoked when an event occurs.
 
@@ -220,12 +213,6 @@ sdkStartContinousTranslationBtn.addEventListener("click", function () {
 
     reco = new SpeechSDK.TranslationRecognizer(speechConfig, audioConfig);
 
-    // If Phrases are specified, include them.
-    if (phrases !== "") {
-        let phraseListGrammar = SpeechSDK.PhraseListGrammar.fromRecognizer(reco);
-        phraseListGrammar.addPhrase(phrases.value.split(";"));
-    }
-
     // Before beginning speech recognition, setup the callbacks to be invoked when an event occurs.
 
     // The event recognizing signals that an intermediate recognition result is received.
@@ -276,8 +263,8 @@ sdkStartContinousTranslationBtn.addEventListener("click", function () {
     // If the event result contains valid audio, it's reason will be ResultReason.SynthesizingAudio
     // Once a complete phrase has been synthesized, the event will be called with ResultReason.SynthesizingAudioComplete and a 0 byte audio payload.
     reco.synthesizing = function (s, e) {
+        reco.stopContinuousRecognitionAsync();
         // window.console.log(s.audioConfig.privSource.privStreams);
-        // console.log(e.result.audio)
 
         let audioSize = e.result.audio === undefined ? 0 : e.result.audio.byteLength;
 
@@ -288,6 +275,7 @@ sdkStartContinousTranslationBtn.addEventListener("click", function () {
             soundContext.decodeAudioData(e.result.audio, function (newBuffer) {
                 source.buffer = newBuffer;
                 source.connect(soundContext.destination);
+                source.addEventListener('ended', () => reco.startContinuousRecognitionAsync());
                 source.start(0);
             });
         }

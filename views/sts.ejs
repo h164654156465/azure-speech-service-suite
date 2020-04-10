@@ -28,14 +28,9 @@
                     <option value="fr-FR">French - FR</option>
                 </select>
             </div>
-        </div>
-        <div class="row mt-4">
-            <input type="file" id="filePicker2" accept=".wav" style="display:none" />
-        </div>
-        <div class="row">
-            <div class="col">Output language:
+            <div class="col-3">Output language:
                 <!-- For a full list of supported languages see: https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech-->
-                <select id="languageTargetOptions">
+                <select id="languageTargetOptions" class="custom-select">
                     <option value="en" selected="selected">
                         English
                         - US</option>
@@ -45,9 +40,10 @@
                     </option>
                     <option value="ko">Korean - KR</option>
                 </select>
-                <input id="voiceOutput" type="checkbox" checked>
-                <label for="voiceOutput" data-toggle="tooltip" data-placement="right"
-                    title="Only for continuous translation">Voice output</label></div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <input type="file" id="filePicker2" accept=".wav" style="display:none" />
         </div>
         <div class="row mt-4">
             <div class="col">
@@ -64,10 +60,13 @@
                 <div class="col-12">
                     <h3>Continuous Speech Translation</h3>
                 </div>
-                <div class="col-12">
+                <div class="col-12">    
                     <button id="speechsdkStartContinuousTranslation" class="btn btn-primary">start</button>
                     <button id="speechsdkStopContinuousTranslation" class="btn btn-secondary"
                         disabled="disabled">stop</button>
+                    <input id="voiceOutput" type="checkbox" checked>
+                    <label for="voiceOutput" data-toggle="tooltip" data-placement="right"
+                        title="Only for continuous translation">Voice output</label>
                 </div>
             </div>
         </div>
